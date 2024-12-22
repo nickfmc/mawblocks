@@ -1,5 +1,7 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { InspectorControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import { spacingAttributes } from '../blocks/shared/attributes';
+import SpacingControls from '../blocks/components/SpacingControls';
 import { 
     PanelBody, 
     SelectControl,
@@ -14,6 +16,7 @@ registerBlockType('maw/block-one', {
     category: 'design',
     
     attributes: {
+        ...spacingAttributes, // spread the spacing attributes
         flexDirection: {
             type: 'string',
             default: 'row'
@@ -42,25 +45,6 @@ registerBlockType('maw/block-one', {
             type: 'boolean',
             default: false
         },
-        // Add spacing attributes
-        padding: {
-            type: 'object',
-            default: {
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0,
-            }
-        },
-        margin: {
-            type: 'object',
-            default: {
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0,
-            }
-        }
     },
 
     edit: ({ attributes, setAttributes, clientId }) => {
@@ -77,14 +61,14 @@ registerBlockType('maw/block-one', {
         } = attributes;
 
         const blockProps = useBlockProps({
-            className: `maw-flex-container maw-flex-container-${clientId}`,
-            style: {
-                minHeight: minHeight ? minHeight + 'px' : undefined,
-                width: fullWidth ? '100%' : 'auto',
-                padding: `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`,
-                margin: `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`
-            }
-        });
+    className: `maw-flex-container maw-flex-container-${clientId}`,
+    style: {
+        minHeight: minHeight ? minHeight + 'px' : undefined,
+        width: fullWidth ? '100%' : 'auto',
+        padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
+        margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
+    }
+});
 
         // Inject dynamic styles for this specific instance
         const styleElement = document.createElement('style');
@@ -105,84 +89,10 @@ registerBlockType('maw/block-one', {
         return (
             <>
                 <InspectorControls>
-                    <PanelBody title="Spacing" initialOpen={false}>
-                        <p className="spacing-control-label">Padding (px)</p>
-                        <RangeControl
-                            label="Top"
-                            value={padding.top}
-                            onChange={(value) => setAttributes({ 
-                                padding: { ...padding, top: value } 
-                            })}
-                            min={0}
-                            max={200}
-                        />
-                        <RangeControl
-                            label="Right"
-                            value={padding.right}
-                            onChange={(value) => setAttributes({ 
-                                padding: { ...padding, right: value } 
-                            })}
-                            min={0}
-                            max={200}
-                        />
-                        <RangeControl
-                            label="Bottom"
-                            value={padding.bottom}
-                            onChange={(value) => setAttributes({ 
-                                padding: { ...padding, bottom: value } 
-                            })}
-                            min={0}
-                            max={200}
-                        />
-                        <RangeControl
-                            label="Left"
-                            value={padding.left}
-                            onChange={(value) => setAttributes({ 
-                                padding: { ...padding, left: value } 
-                            })}
-                            min={0}
-                            max={200}
-                        />
-
-                        <p className="spacing-control-label">Margin (px)</p>
-                        <RangeControl
-                            label="Top"
-                            value={margin.top}
-                            onChange={(value) => setAttributes({ 
-                                margin: { ...margin, top: value } 
-                            })}
-                            min={0}
-                            max={200}
-                        />
-                        <RangeControl
-                            label="Right"
-                            value={margin.right}
-                            onChange={(value) => setAttributes({ 
-                                margin: { ...margin, right: value } 
-                            })}
-                            min={0}
-                            max={200}
-                        />
-                        <RangeControl
-                            label="Bottom"
-                            value={margin.bottom}
-                            onChange={(value) => setAttributes({ 
-                                margin: { ...margin, bottom: value } 
-                            })}
-                            min={0}
-                            max={200}
-                        />
-                        <RangeControl
-                            label="Left"
-                            value={margin.left}
-                            onChange={(value) => setAttributes({ 
-                                margin: { ...margin, left: value } 
-                            })}
-                            min={0}
-                            max={200}
-                        />
-                    </PanelBody>
-
+                    <SpacingControls 
+                        attributes={attributes}
+                        setAttributes={setAttributes}
+                    />
                     <PanelBody title="Flex Layout Settings">
                         <SelectControl
                             label="Flex Direction"
@@ -289,8 +199,8 @@ registerBlockType('maw/block-one', {
                 gap: gap + 'px',
                 minHeight: minHeight ? minHeight + 'px' : undefined,
                 width: fullWidth ? '100%' : 'auto',
-                padding: `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`,
-                margin: `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`
+                padding: `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`,
+                margin: `${margin.top} ${margin.right} ${margin.bottom} ${margin.left}`
             }
         });
 
