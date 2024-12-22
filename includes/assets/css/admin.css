@@ -1,0 +1,171 @@
+.maw-admin-wrap {
+    margin: 20px 20px 0 0;
+}
+
+.maw-header {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #e2e4e7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.maw-header h1 {
+    display: flex;
+    align-items: center;
+    margin: 0; 
+    font-size: 24px;
+}
+
+.maw-header .dashicons {
+    margin-right: 10px;
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+}
+
+.maw-version {
+    background: #f0f0f1;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin: 0;
+}
+
+.maw-admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+}
+
+.maw-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e2e4e7;
+    margin-bottom: 20px;
+}
+
+.maw-block-card {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border: 1px solid #e2e4e7;
+}
+
+.maw-block-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.maw-block-header .dashicons {
+    margin-right: 10px;
+    color: #1e1e1e;
+}
+
+.maw-block-title {
+    flex-grow: 1;
+    font-weight: 600;
+}
+
+.maw-block-description {
+    color: #646970;
+    margin: 0;
+    padding-left: 24px;
+}
+
+/* Toggle Switch */
+.maw-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.maw-toggle-checkbox {
+    display: none;
+}
+
+.maw-toggle-label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.maw-toggle-label:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.maw-toggle-checkbox:checked + .maw-toggle-label {
+    background-color: #2271b1;
+}
+
+.maw-toggle-checkbox:checked + .maw-toggle-label:before {
+    transform: translateX(26px);
+}
+
+/* Sidebar Cards */
+.maw-help-card ul {
+    margin: 0;
+    padding: 0;
+}
+
+.maw-help-card li {
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.maw-help-card a {
+    text-decoration: none;
+    color: #2271b1;
+    display: flex;
+    align-items: center;
+}
+
+.maw-help-card .dashicons {
+    margin-right: 8px;
+}
+
+.maw-pro-features {
+    margin: 0 0 20px 0;
+    padding: 0;
+}
+
+.maw-pro-features li {
+    margin-bottom: 10px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.maw-pro-features .dashicons {
+    margin-right: 8px;
+    color: #00a32a;
+}
+
+.maw-upgrade-button {
+    width: 100%;
+    text-align: center;
+}
+
+.maw-save-button {
+    margin-top: 20px !important;
+}

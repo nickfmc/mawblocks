@@ -1,0 +1,35 @@
+{
+  "name": "mawblocks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickfmc/mawblocks.git"
+  },
+  "keywords": [],
+  "author": "Nick Murray - MAW",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/nickfmc/mawblocks/issues"
+  },
+  "homepage": "https://github.com/nickfmc/mawblocks#readme",
+  "dependencies": {
+    "@wordpress/blocks": "^12.0.0",
+    "@wordpress/components": "^23.0.0",
+    "@wordpress/element": "^5.0.0"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.7.0"
+  },
+  "wp-scripts": {
+    "entry": {
+      "block-one": "./src/block-one/index.js",
+      "block-two": "./src/block-two/index.js"
+    }
+  }
+}
