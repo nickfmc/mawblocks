@@ -13,6 +13,14 @@ function maw_register_blocks() {
         // Add more blocks as needed
     );
 
+    // Register the editor styles once for all blocks
+    wp_register_style(
+        'maw-editor-styles',
+        MAW_PLUGIN_URL . '/src/blocks/components/spacing-controls.css',
+        array('wp-components'),
+        filemtime(MAW_PLUGIN_PATH . '/src/blocks/components/spacing-controls.css')
+    );
+
     foreach ( $enabled_blocks as $block_name ) {
         if ( isset( $all_blocks[ $block_name ] ) ) {
             // Enqueue block scripts
@@ -23,9 +31,10 @@ function maw_register_blocks() {
                 filemtime( MAW_PLUGIN_PATH . 'build/' . $block_name . '.js' )
             );
 
-            // Register the block
+            // Register the block with both script and style
             register_block_type( 'maw/' . $block_name, array(
                 'editor_script' => 'maw-' . $block_name,
+                'editor_style'  => 'maw-editor-styles',
             ) );
         }
     }

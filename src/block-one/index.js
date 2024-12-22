@@ -10,6 +10,7 @@ import {
 } from '@wordpress/components';
 import './editor.scss';
 
+
 registerBlockType('maw/block-one', {
     title: 'Flex Container',
     icon: 'layout',

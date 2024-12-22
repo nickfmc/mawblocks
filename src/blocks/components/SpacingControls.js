@@ -2,6 +2,7 @@
 import { __ } from '@wordpress/i18n';
 import { PanelBody, __experimentalBoxControl as BoxControl } from '@wordpress/components';
 
+
 const SpacingControls = ({ attributes, setAttributes }) => {
     const { padding, margin } = attributes;
 
@@ -14,9 +15,14 @@ const SpacingControls = ({ attributes, setAttributes }) => {
     ];
 
     return (
-        <PanelBody title={__('Spacing')} initialOpen={false}>
+        <PanelBody 
+            title={__('Spacing')} 
+            initialOpen={false}
+            className="custom-spacing-controls" // Add custom class
+        >
             {BoxControl ? (
                 <>
+                <div className="custom-box-control-wrapper">
                     <BoxControl
                         label={__('Padding')}
                         values={padding}
@@ -24,8 +30,11 @@ const SpacingControls = ({ attributes, setAttributes }) => {
                         units={units}
                         allowReset={true}
                         splitOnAxis={false}
+                        className="custom-box-control" // Add custom class
                     />
+                    </div>
 
+                    <div className="custom-box-control-wrapper">
                     <BoxControl
                         label={__('Margin')}
                         values={margin}
@@ -33,7 +42,9 @@ const SpacingControls = ({ attributes, setAttributes }) => {
                         units={units}
                         allowReset={true}
                         splitOnAxis={false}
+                        className="custom-box-control" // Add custom class
                     />
+                    </div>
                 </>
             ) : (
                 <div className="components-notice is-warning">
