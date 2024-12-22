@@ -31,3 +31,89 @@
         }
     }
 }
+
+
+/* spacing-controls.css */
+
+/* Custom Panel styling */
+.custom-spacing-controls .components-panel__body-title {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e2e4e7;
+}
+
+/* Box Control wrapper */
+.custom-box-control-wrapper {
+    margin-bottom: 24px;
+}
+
+/* Box Control container */
+.custom-box-control .components-box-control__container {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Input fields */
+.custom-box-control .components-base-control__field input {
+    border: 1px solid #e2e4e7;
+    border-radius: 4px;
+    padding: 6px 8px;
+}
+
+/* Labels */
+.custom-box-control .components-base-control__label {
+    color: #1e1e1e;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Unit selector */
+.custom-box-control .components-unit-control-wrapper {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+/* Linked button */
+.custom-box-control .components-box-control__linked-button {
+    background-color: #f8f9fa;
+    border: 1px solid #e2e4e7;
+    border-radius: 4px;
+}
+
+/* Reset button */
+.custom-box-control .components-button.is-secondary { 
+    background-color: transparent;
+    border: 1px solid #e2e4e7;
+    color: #1e1e1e;
+}
+
+/* Hover states */
+.custom-box-control input:hover,
+.custom-box-control .components-button:hover {
+    border-color: #007cba;
+}
+
+/* Focus states */
+.custom-box-control input:focus {
+    border-color: #007cba;
+    box-shadow: 0 0 0 1px #007cba;
+}
+
+/* More specific custom styles */
+.custom-box-control .components-box-control__dimensions-container {
+    padding: 16px;
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+}
+
+.custom-box-control .components-box-control__input-field {
+    font-family: 'Your Custom Font', sans-serif;
+    font-size: 14px;
+}
+
+/* Custom hover effects */
+.custom-box-control .components-button:hover {
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+

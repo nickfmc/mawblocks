@@ -1,88 +1,58 @@
-import { PanelBody, RangeControl } from '@wordpress/components';
+// components/SpacingControls.js
 import { __ } from '@wordpress/i18n';
+import { PanelBody, __experimentalBoxControl as BoxControl } from '@wordpress/components';
 
-export const SpacingControls = ({ attributes, setAttributes }) => {
+
+const SpacingControls = ({ attributes, setAttributes }) => {
     const { padding, margin } = attributes;
 
-    return (
-        <PanelBody title={__('Spacing', 'your-text-domain')} initialOpen={false}>
-            <div className="spacing-controls">
-                <p className="spacing-control-label">Padding (px)</p>
-                <RangeControl
-                    label="Top"
-                    value={padding.top}
-                    onChange={(value) => setAttributes({ 
-                        padding: { ...padding, top: value } 
-                    })}
-                    min={0}
-                    max={200}
-                />
-                <RangeControl
-                    label="Right"
-                    value={padding.right}
-                    onChange={(value) => setAttributes({ 
-                        padding: { ...padding, right: value } 
-                    })}
-                    min={0}
-                    max={200}
-                />
-                <RangeControl
-                    label="Bottom"
-                    value={padding.bottom}
-                    onChange={(value) => setAttributes({ 
-                        padding: { ...padding, bottom: value } 
-                    })}
-                    min={0}
-                    max={200}
-                />
-                <RangeControl
-                    label="Left"
-                    value={padding.left}
-                    onChange={(value) => setAttributes({ 
-                        padding: { ...padding, left: value } 
-                    })}
-                    min={0}
-                    max={200}
-                />
+    // Define common units
+    const units = [
+        { value: 'px', label: 'px' },
+        { value: '%', label: '%' },
+        { value: 'em', label: 'em' },
+        { value: 'rem', label: 'rem' },
+    ];
 
-                <p className="spacing-control-label">Margin (px)</p>
-                <RangeControl
-                    label="Top"
-                    value={margin.top}
-                    onChange={(value) => setAttributes({ 
-                        margin: { ...margin, top: value } 
-                    })}
-                    min={0}
-                    max={200}
-                />
-                <RangeControl
-                    label="Right"
-                    value={margin.right}
-                    onChange={(value) => setAttributes({ 
-                        margin: { ...margin, right: value } 
-                    })}
-                    min={0}
-                    max={200}
-                />
-                <RangeControl
-                    label="Bottom"
-                    value={margin.bottom}
-                    onChange={(value) => setAttributes({ 
-                        margin: { ...margin, bottom: value } 
-                    })}
-                    min={0}
-                    max={200}
-                />
-                <RangeControl
-                    label="Left"
-                    value={margin.left}
-                    onChange={(value) => setAttributes({ 
-                        margin: { ...margin, left: value } 
-                    })}
-                    min={0}
-                    max={200}
-                />
-            </div>
+    return (
+        <PanelBody 
+            title={__('Spacing')} 
+            initialOpen={false}
+            className="custom-spacing-controls" // Add custom class
+        >
+            {BoxControl ? (
+                <>
+                <div className="custom-box-control-wrapper">
+                    <BoxControl
+                        label={__('Padding')}
+                        values={padding}
+                        onChange={(newPadding) => setAttributes({ padding: newPadding })}
+                        units={units}
+                        allowReset={true}
+                        splitOnAxis={false}
+                        className="custom-box-control" // Add custom class
+                    />
+                    </div>
+
+                    <div className="custom-box-control-wrapper">
+                    <BoxControl
+                        label={__('Margin')}
+                        values={margin}
+                        onChange={(newMargin) => setAttributes({ margin: newMargin })}
+                        units={units}
+                        allowReset={true}
+                        splitOnAxis={false}
+                        className="custom-box-control" // Add custom class
+                    />
+                    </div>
+                </>
+            ) : (
+                <div className="components-notice is-warning">
+                    {__('BoxControl component is not available in your WordPress version. Please update to the latest version.')}
+                </div>
+            )}
         </PanelBody>
     );
 };
+
+export default SpacingControls;
