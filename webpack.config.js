@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
     ...defaultConfig,
     entry: {
-        'block-one': path.resolve(__dirname, 'src/block-one/index.js'),
-        'block-two': path.resolve(__dirname, 'src/block-two/index.js')
+        'maw-block-one': path.resolve(__dirname, 'src/block-one/index.js'),
+        'maw-responsive-tables': path.resolve(__dirname, 'src/responsive-tables/index.js')
     }
 };

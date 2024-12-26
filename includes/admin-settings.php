@@ -36,7 +36,7 @@ function maw_settings_init() {
             'description' => 'A versatile content block for creating engaging layouts.',
             'icon' => 'layout'
         ],
-        'block-two' => [
+        'responsive-tables' => [
             'name' => 'Block Two',
             'description' => 'Advanced gallery block with multiple display options.',
             'icon' => 'images-alt2'

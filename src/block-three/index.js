@@ -2,7 +2,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { Button } from '@wordpress/components';
 
-registerBlockType('maw/block-two', {
+registerBlockType('maw/blockthree', {
     title: 'Block Two',
     icon: 'format-image',
     category: 'common',
