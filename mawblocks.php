@@ -19,3 +19,15 @@ define( 'MAW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 // Include necessary files
 require_once MAW_PLUGIN_PATH . 'includes/admin-settings.php';
 require_once MAW_PLUGIN_PATH . 'includes/register-blocks.php';
+
+
+// Enqueue block editor styles
+function maw_enqueue_block_editor_assets() {
+    wp_enqueue_style(
+        'maw-block-editor-styles',
+        MAW_PLUGIN_URL . 'includes/maw-editor-styles.css',
+        array(),
+        filemtime(MAW_PLUGIN_PATH . 'includes/maw-editor-styles.css')
+    );
+}
+add_action('enqueue_block_editor_assets', 'maw_enqueue_block_editor_assets');

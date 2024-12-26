@@ -1,0 +1,118 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root {
+    --purple-accent: #8b5cf6;      /* Lighter main purple */
+    --purple-dark: #4c1d95;        /* Darker purple for contrast */
+    --purple-light: #ddd6fe;       /* Very light purple */
+    --purple-hover: #7c3aed;       /* Vibrant purple for hover */
+    --purple-bg-subtle: #f5f3ff;   /* Super subtle purple background */
+}
+
+.custom-spacing-controls .components-panel__body-title {
+    background: var(--purple-bg-subtle);
+    border-left: 4px solid var(--purple-accent);
+    padding: 0;
+    color: var(--purple-dark);
+    font-weight: 600;
+}
+
+.custom-box-control-wrapper {
+    background: white;
+    border: 1px solid var(--purple-light);
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 14px;
+}
+
+.components-box-control__container {
+    padding: 12px;
+    background: var(--purple-bg-subtle);
+    border: 1px solid var(--purple-light);
+}
+
+.components-box-control__input-field {
+    border: 1px solid var(--purple-light) !important;
+    background: white !important;
+    color: var(--purple-dark) !important;
+}
+
+.components-box-control__input-field:hover {
+    border-color: var(--purple-accent) !important;
+}
+
+.components-box-control__input-field:focus {
+    border-color: var(--purple-accent) !important;
+    box-shadow: 0 0 0 1px var(--purple-accent) !important;
+}
+
+.components-box-control__linked-button {
+    border-color: var(--purple-light) !important;
+}
+
+.components-box-control__linked-button.is-pressed {
+    background: var(--purple-accent) !important;
+    border-color: var(--purple-accent) !important;
+    color: white !important;
+}
+
+.components-box-control__reset-button {
+    background: var(--purple-bg-subtle) !important;
+    color: var(--purple-dark) !important;
+    border: 1px solid var(--purple-light) !important;
+    padding: 6px 12px !important;
+}
+
+.components-box-control__reset-button:hover {
+    background: var(--purple-light) !important;
+    border-color: var(--purple-accent) !important;
+}
+
+.components-box-control__label {
+    color: var(--purple-dark);
+    font-weight: 500;
+}
+
+.components-unit-control__select {
+    border-color: var(--purple-light) !important;
+}
+
+.components-unit-control__select:focus {
+    border-color: var(--purple-accent) !important;
+    box-shadow: 0 0 0 1px var(--purple-accent) !important;
+}

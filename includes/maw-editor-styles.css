@@ -90,7 +90,7 @@
 
 /* Add Column/Row buttons styling */
 .wp-block-maw-responsive-tables .table-controls {
-    margin-top: 20px;
+    margin-top: 80px !important;
     display: flex;
     gap: 10px;
 }
@@ -139,3 +139,21 @@
         padding: 10px;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

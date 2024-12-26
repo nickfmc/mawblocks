@@ -8,9 +8,10 @@ import {
     Button, 
     SelectControl,
     IconButton
-} from '@wordpress/components';
+} from '@wordpress/components'; 
 import { useTable, useSortBy, useFilters, usePagination, useResizeColumns } from 'react-table';
-import './styles.css'; 
+import './style.scss';
+
 
 registerBlockType('maw/responsive-tables', {
     title: 'Advanced Responsive Table',

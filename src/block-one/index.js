@@ -8,7 +8,7 @@ import {
     RangeControl,
     ToggleControl
 } from '@wordpress/components';
-import './editor.scss';
+
 
 
 registerBlockType('maw/block-one', {
