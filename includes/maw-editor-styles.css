@@ -1,5 +1,5 @@
 /* Modern table styling in editor */
-.wp-block-maw-responsive-tables .table-container {
+[data-type="maw/responsive-tables"] .table-container {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -7,14 +7,14 @@
     margin: 20px 0;
 }
 
-.wp-block-maw-responsive-tables table {
+[data-type="maw/responsive-tables"] table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
 }
 
 /* Header cells styling */
-.wp-block-maw-responsive-tables thead th {
+[data-type="maw/responsive-tables"] thead th {
     background: #f8f9fa;
     position: relative;
     padding: 12px;
@@ -22,7 +22,7 @@
 }
 
 /* Remove Column Button styling */
-.wp-block-maw-responsive-tables .remove-column-button {
+[data-type="maw/responsive-tables"] .remove-column-button {
     position: absolute;
     top: 4px;
     right: 4px;
@@ -36,25 +36,25 @@
     transition: all 0.2s ease;
 }
 
-.wp-block-maw-responsive-tables th:hover .remove-column-button {
+[data-type="maw/responsive-tables"] th:hover .remove-column-button {
     opacity: 1;
 }
 
-.wp-block-maw-responsive-tables .remove-column-button:hover {
+[data-type="maw/responsive-tables"] .remove-column-button:hover {
     background: #f44336;
     color: white;
     border-color: #f44336;
 }
 
 /* Table cell styling */
-.wp-block-maw-responsive-tables td {
+[data-type="maw/responsive-tables"] td {
     padding: 12px;
     border: 1px solid #e2e8f0;
     position: relative;
 }
 
 /* Remove Row Button styling */
-.wp-block-maw-responsive-tables .remove-row-button {
+[data-type="maw/responsive-tables"] .remove-row-button {
     padding: 4px !important;
     min-width: 24px;
     height: 24px;
@@ -65,18 +65,18 @@
     transition: all 0.2s ease;
 }
 
-.wp-block-maw-responsive-tables tr:hover .remove-row-button {
+[data-type="maw/responsive-tables"] tr:hover .remove-row-button {
     opacity: 1;
 }
 
-.wp-block-maw-responsive-tables .remove-row-button:hover {
+[data-type="maw/responsive-tables"] .remove-row-button:hover {
     background: #f44336;
     color: white;
     border-color: #f44336;
 }
 
 /* Text inputs styling */
-.wp-block-maw-responsive-tables .components-text-control__input {
+[data-type="maw/responsive-tables"] .components-text-control__input {
     border: none;
     background: transparent;
     width: 100%;
@@ -84,18 +84,18 @@
     margin: 0;
 }
 
-.wp-block-maw-responsive-tables th .components-text-control__input {
+[data-type="maw/responsive-tables"] th .components-text-control__input {
     font-weight: bold;
 }
 
 /* Add Column/Row buttons styling */
-.wp-block-maw-responsive-tables .table-controls {
+[data-type="maw/responsive-tables"] .table-controls {
     margin-top: 80px !important;
     display: flex;
     gap: 10px;
 }
 
-.wp-block-maw-responsive-tables .table-controls button {
+[data-type="maw/responsive-tables"] .table-controls button {
     background: #007cba;
     color: white;
     border: none;
@@ -105,55 +105,37 @@
     transition: all 0.2s ease;
 }
 
-.wp-block-maw-responsive-tables .table-controls button:hover {
+[data-type="maw/responsive-tables"] .table-controls button:hover {
     background: #006ba1;
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Hover states */
-.wp-block-maw-responsive-tables tr:hover {
+[data-type="maw/responsive-tables"] tr:hover {
     background: #f8f9fa;
 }
 
-.wp-block-maw-responsive-tables td:hover .components-text-control__input {
+[data-type="maw/responsive-tables"] td:hover .components-text-control__input {
     background: #fff;
     border-radius: 4px;
 }
 
 /* Focus states */
-.wp-block-maw-responsive-tables .components-text-control__input:focus {
+[data-type="maw/responsive-tables"] .components-text-control__input:focus {
     box-shadow: 0 0 0 2px #007cba;
     border-radius: 4px;
     outline: none;
 }
 
 /* Zebra striping */
-.wp-block-maw-responsive-tables tbody tr:nth-child(even) {
+[data-type="maw/responsive-tables"] tbody tr:nth-child(even) {
     background: #fafbfc;
 }
 
 /* Responsive styles */
 @media (max-width: 768px) {
-    .wp-block-maw-responsive-tables .table-container {
+    [data-type="maw/responsive-tables"] .table-container {
         padding: 10px;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
