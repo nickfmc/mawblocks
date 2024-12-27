@@ -1,67 +1,263 @@
+$primary-color: var(--table-primary-color, #007cba);
+
+
 .table-container {
     max-width: 100%;
     overflow-x: auto;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.table-container table {
+    display: table;
+    margin-top: 0;
+    margin-bottom: 0;
+}
 /* Stack mode */
 @media (max-width: 768px) {
-    .table-container.stack table,
-    .table-container.stack thead,
-    .table-container.stack tbody,
-    .table-container.stack tr,
-    .table-container.stack th,
-    .table-container.stack td {
-        display: block;
-        width: 100%;
+    .table-container.stack {
+        padding: 0;
+        
+        table,
+        thead,
+        tbody,
+        tr,
+        th,
+        td {
+            display: block;
+            width: 100%;
+        }
+
+        thead {
+            display: none;
+        }
+
+        tr {
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        td {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:before {
+                content: attr(data-label);
+                display: block;
+                margin-bottom: 0.5rem;
+                color: #8792a2;
+                font-size: 0.75rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            > * {
+                width: 100%;
+                display: block;
+                color: #2d3748;
+                font-size: 1rem;
+                font-weight: 400;
+            }
+        }
+
+        // Modern zebra striping
+        tr:nth-child(even) {
+            background: linear-gradient(to right, #ffffff, #fafbff);
+        }
+
+        // Optional: Add some micro-interactions
+        td {
+            transition: background-color 0.2s ease;
+            
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.01);
+            }
+        }
+    }
+}
+
+
+
+// Scroll mode
+.table-container.scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+    
+    table {
+        min-width: 100%;
+        white-space: nowrap; // Prevent text wrapping
     }
 
-    .table-container.stack th {
-        text-align: left;
-        background: #f8f9fa;
+    th, td {
+        min-width: 150px; // Prevent columns from becoming too narrow
+       
+        padding: 0.75rem 1rem;
+        @media (max-width: 768px) {
+            max-width: 400px; // Prevent columns from becoming too wide
+        }
+        
+        // Handle long content
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
-    .table-container.stack td {
-        border: none;
-        position: relative; 
-        padding-left: 50%;
+    // Special cases for specific column types
+    .column-small {
+        min-width: 100px; // Smaller minimum for columns like ID or status
     }
 
-    .table-container.stack td:before {
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 45%;
-        padding-right: 10px;
-        font-weight: bold;
+    .column-large {
+        min-width: 200px; // Larger minimum for columns with more content
     }
+
+    // Add shadow indication for scroll
+    background: 
+        linear-gradient(to right, white 30%, rgba(255,255,255,0)),
+        linear-gradient(to right, rgba(255,255,255,0), white 70%) 100% 0,
+        radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.2), rgba(0,0,0,0)),
+        radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.2), rgba(0,0,0,0)) 100% 0;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+    background-attachment: local, local, scroll, scroll;
 }
 
 /* Cards mode */
 @media (max-width: 768px) {
-    .table-container.cards tr {
-        display: flex;
-        flex-wrap: wrap;
-        margin-bottom: 1rem;
-        border: 1px solid #ddd;
+    .table-container.cards {
         padding: 0.5rem;
-    }
+        
+        thead {
+            display: none; // Hide headers on mobile
+        }
 
-    .table-container.cards td {
-        flex: 1 1 50%;
-        padding: 0.5rem;
+        tr {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            background-color: #fff;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        td {
+            flex: 1 1 calc(50% - 1rem);
+            padding: 0.75rem;
+            margin: 0.5rem;
+            position: relative;
+            
+            // Add labels for each cell
+            &:before {
+                content: attr(data-label);
+                display: block;
+                font-size: 0.875rem;
+                font-weight: 600;
+                color: #666;
+                margin-bottom: 0.25rem;
+            }
+
+            // Style the content
+            > * {
+                display: block;
+                font-size: 1rem;
+                color: #333;
+            }
+        }
+
+        // Better spacing for single column items
+        td.full-width {
+            flex: 1 1 100%;
+        }
+
+        // Zebra striping for better distinction
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        // Style specific types of content
+        .status-cell {
+            text-align: center;
+            
+            span {
+                display: inline-block;
+                padding: 0.25rem 0.75rem;
+                border-radius: 1rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        // Add dividers between cells
+        td:not(:last-child) {
+            border-bottom: 1px solid #eee;
+        }
     }
 }
+
 
 /* Basic styling */
 .wp-block-table {
     border-collapse: collapse;
     width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .wp-block-table th,
 .wp-block-table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.wp-block-table th {
+    background-color: $primary-color;
+    color: #fff;
+    font-weight: bold;
+}
+
+.wp-block-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.wp-block-table tr:hover {
+    background-color: #e9f5ff;
+}
+
+.wp-block-table td {
+    transition: background-color 0.3s ease;
+}
+
+.wp-block-table thead,
+.wp-block-table tbody {
+    display: table-row-group;
+    width: 100%;
 }
 
 .pagination {
@@ -76,4 +272,18 @@
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
+}
+
+.table-controls button {
+    background-color: $primary-color;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.table-controls button:hover {
+    background-color: #005a8e;
 }

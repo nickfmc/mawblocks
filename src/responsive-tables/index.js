@@ -165,6 +165,29 @@ edit: function EditComponent({ attributes, setAttributes }) {
         setAttributes({ data: [...data, newRow] });
     };
 
+
+// sorting options
+    const tableInstance = useTable(
+        {
+            columns,
+            data,
+            initialState: {
+                sortBy: []
+            }
+        },
+        useSortBy
+    );
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+    } = tableInstance;
+    // sorting options
+
+
     return (
         <>
             <InspectorControls>
@@ -180,15 +203,6 @@ edit: function EditComponent({ attributes, setAttributes }) {
                         onChange={(value) => setAttributes({ responsiveMode: value })}
                     />
                     
-                    <ToggleControl
-                        label="Enable Sorting"
-                        checked={enableFeatures.sorting}
-                        onChange={(value) => 
-                            setAttributes({ 
-                                enableFeatures: {...enableFeatures, sorting: value} 
-                            })
-                        }
-                    />
                 </PanelBody>
             </InspectorControls>
 
@@ -217,7 +231,7 @@ edit: function EditComponent({ attributes, setAttributes }) {
                             {data.map((row, rowIndex) => (
                                 <tr key={rowIndex}>
                                     {columns.map((column, columnIndex) => (
-                                        <td key={`${rowIndex}-${columnIndex}`}>
+                                        <td key={`${rowIndex}-${columnIndex}`} data-label={column.Header} >
                                             <TextControl
         value={(editingCells[`${rowIndex}-${column.accessor}`] ?? row[column.accessor]) || ''}
         
@@ -277,7 +291,10 @@ edit: function EditComponent({ attributes, setAttributes }) {
                         {data.map((row, rowIndex) => (
                             <tr key={rowIndex}>
                                 {columns.map((column, colIndex) => (
-                                    <td key={colIndex}>
+                                    <td 
+                                    key={colIndex}
+                                    data-label={column.Header} // Add this line
+                                >
                                         {row[column.accessor]}
                                     </td>
                                 ))}
