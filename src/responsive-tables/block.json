@@ -16,6 +16,26 @@
             "type": "string",
             "default": "#007cba"
         },
+        "thTypographyColor": {
+            "type": "string",
+            "default": "#ffffff"
+        },
+        "thFontSize": {
+            "type": "number",
+            "default": 16
+        },
+        "stripedRows": {
+            "type": "boolean",
+            "default": false
+        },
+        "stripedRowBgColor": {
+            "type": "string",
+            "default": "#f2f2f2"
+        },
+        "stripedRowTextColor": {
+            "type": "string",
+            "default": "#333333"
+        },
         "columns": {
             "type": "array",
             "default": [

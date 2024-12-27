@@ -8,7 +8,10 @@ import {
     SelectControl,
     IconButton,
     ColorPicker,
-    Button
+    Button,
+    ToggleControl,
+    RangeControl,
+    FontSizePicker
 } from '@wordpress/components'; 
 import { __ } from '@wordpress/i18n';
 import { useTable, useSortBy, useFilters, usePagination, useResizeColumns } from 'react-table';
@@ -21,7 +24,12 @@ function Edit({ attributes, setAttributes }) {
         columns,
         data,
         responsiveMode,
-        primaryTableColor
+        primaryTableColor,
+        thTypographyColor,
+        thFontSize,
+        stripedRows,
+        stripedRowBgColor,
+        stripedRowTextColor
     } = attributes;
 
     // Add local state for editing
@@ -154,6 +162,45 @@ function Edit({ attributes, setAttributes }) {
         onChangeComplete={ (color) => setAttributes({ primaryTableColor: color.hex }) }
         enableAlpha  // Enable transparency
     />
+  
+  <PanelBody title={__('Table Header Typography Settings')}>
+  <ColorPicker
+        label={__('Header Text Color')}
+        color={ thTypographyColor }
+        onChangeComplete={ (color) => setAttributes({ thTypographyColor: color.hex }) }
+        enableAlpha
+    />
+    
+    <RangeControl
+        label={__('Header Font Size')}
+        value={thFontSize}
+        onChange={(value) => setAttributes({ thFontSize: value })}
+        min={10}
+        max={50}
+    />
+</PanelBody>
+
+    <ToggleControl
+        label={ __('Striped Rows') }
+        checked={ stripedRows }
+        onChange={ (value) => setAttributes({ stripedRows: value }) }
+    />
+    {stripedRows && (
+        <>
+            <ColorPicker
+                label={ __('Striped Row Background Color') }
+                color={ stripedRowBgColor }
+                onChangeComplete={ (color) => setAttributes({ stripedRowBgColor: color.hex }) }
+                enableAlpha  // Enable transparency
+            />
+            <ColorPicker
+                label={ __('Striped Row Text Color') }
+                color={ stripedRowTextColor }
+                onChangeComplete={ (color) => setAttributes({ stripedRowTextColor: color.hex }) }
+                enableAlpha  // Enable transparency
+            />
+        </>
+    )}
 </PanelBody>
                 <PanelBody title="Table Settings">
                     <SelectControl
@@ -171,16 +218,28 @@ function Edit({ attributes, setAttributes }) {
                 
             </InspectorControls>
 
-            <div {...useBlockProps()} style={{ '--primaryTableColor': primaryTableColor }}>
+            <div {...useBlockProps()} style={{ 
+                '--primaryTableColor': primaryTableColor,
+                '--thTypographyColor': thTypographyColor,
+                '--fontSize': thFontSize ? `${thFontSize}px` : undefined,
+                '--stripedRowBgColor': stripedRowBgColor,
+                '--stripedRowTextColor': stripedRowTextColor
+            }}>
                 <div className={`table-container ${responsiveMode}`}>
                     <table className="wp-block-table">
                         <thead>
                             <tr>
                                 {columns.map((column, columnIndex) => (
-                                    <th key={columnIndex}>
+                                    <th key={columnIndex} style={{ color: thTypographyColor }}>
                                         <TextControl
                                             value={editingCells[`header-${columnIndex}`] ?? column.Header}
                                             onChange={(value) => handleHeaderChange(columnIndex, value)}
+                                            style={{ 
+                                                color: thTypographyColor,
+                                                fontSize: thFontSize + 'px'
+                                            }}
+                                            
+                                            className="th-text-control"
                                         />
                                         <IconButton
                                             icon={
@@ -202,10 +261,10 @@ function Edit({ attributes, setAttributes }) {
                                     {columns.map((column, columnIndex) => (
                                         <td key={`${rowIndex}-${columnIndex}`} data-label={column.Header} >
                                             <TextControl
-        value={(editingCells[`${rowIndex}-${column.accessor}`] ?? row[column.accessor]) || ''}
-        
-        onChange={(value) => handleCellChange(rowIndex, column.accessor, value)}
-    />
+                                                value={(editingCells[`${rowIndex}-${column.accessor}`] ?? row[column.accessor]) || ''}
+                                                
+                                                onChange={(value) => handleCellChange(rowIndex, column.accessor, value)}
+                                            />
                                         </td>
                                     ))}
                                     <td>
@@ -248,10 +307,16 @@ function Edit({ attributes, setAttributes }) {
 
 
 function Save({ attributes }) {
-        const { columns, data, responsiveMode, primaryTableColor } = attributes;
+        const { columns, data, responsiveMode, primaryTableColor, thTypographyColor, thFontSize, stripedRows, stripedRowBgColor, stripedRowTextColor } = attributes;
 
         return (
-            <div {...useBlockProps.save()} className={`table-container ${responsiveMode}`} style={{ '--primaryTableColor': primaryTableColor }}>
+            <div {...useBlockProps.save()} className={`table-container ${responsiveMode}`} style={{ 
+                '--primaryTableColor': primaryTableColor,
+                '--thTypographyColor': thTypographyColor,
+                '--thFontSize': thFontSize ? `${thFontSize}px` : undefined,
+                '--stripedRowBgColor': stripedRowBgColor,
+                '--stripedRowTextColor': stripedRowTextColor
+            }}>
                 <table className="wp-block-table">
                     <thead>
                         <tr>

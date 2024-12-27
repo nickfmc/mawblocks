@@ -1,11 +1,37 @@
-
-
+:root {
+    --primaryTableColor: #007cba;
+    --tableBackgroundColor: #f9f9f9;
+    --tableBorderColor: #ddd;
+    --tableHeaderBackgroundColor: var(--primaryTableColor, #007cba);
+    --tableHeaderTextColor: #fff;
+    --tableRowHoverBackgroundColor: #e9f5ff;
+    --tableCellPadding: 12px 15px;
+    --tableCellTextColor: #333;
+    --tableCellBackgroundColor: #fff;
+    --tableCellBorderColor: #eee;
+    --tableCellHoverBackgroundColor: rgba(0, 0, 0, 0.01);
+    --tableZebraStripeColor: #f2f2f2;
+    --tableCardBorderColor: #e0e0e0;
+    --tableCardBackgroundColor: #fff;
+    --tableCardShadowColor: rgba(0, 0, 0, 0.05);
+    --tableCardHoverShadowColor: rgba(0, 0, 0, 0.1);
+    --tableCardPadding: 1rem;
+    --tableCardMarginBottom: 1rem;
+    --tableCardBorderRadius: 12px;
+    --tableCardTransition: transform 0.2s ease, box-shadow 0.2s ease;
+    --tableCardHoverTransform: translateY(-2px);
+    --tableCardHoverBoxShadow: 0 4px 8px var(--tableCardHoverShadowColor);
+    --thTypographyColor: #ffffff;
+    --thFontSize: 14px;
+    --stripedRowBgColor: #f2f2f2;
+    --stripedRowTextColor: #333333;
+}
 
 .table-container {
     max-width: 100%;
     overflow-x: auto;
     padding: 1rem;
-    background-color: #f9f9f9;
+    background-color: var(--tableBackgroundColor);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -15,6 +41,13 @@
     margin-top: 0;
     margin-bottom: 0;
 }
+
+table {
+    th {
+        font-size: var(--thFontSize);
+    }
+}
+
 /* Stack mode */
 @media (max-width: 768px) {
     .table-container.stack {
@@ -61,7 +94,7 @@
                 content: attr(data-label);
                 display: block;
                 margin-bottom: 0.5rem;
-                color: var(--primaryTableColor, #007cba);
+                color: var(--primaryTableColor);
 
                 font-size: 0.75rem;
                 font-weight: 600;
@@ -93,8 +126,6 @@
         }
     }
 }
-
-
 
 // Scroll mode
 .table-container.scroll {
@@ -154,16 +185,16 @@
             display: flex;
             flex-wrap: wrap;
             margin-bottom: 1rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            background-color: #fff;
-            padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid var(--tableCardBorderColor);
+            border-radius: var(--tableCardBorderRadius);
+            background-color: var(--tableCardBackgroundColor);
+            padding: var(--tableCardPadding);
+            box-shadow: 0 2px 4px var(--tableCardShadowColor);
+            transition: var(--tableCardTransition);
 
             &:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transform: var(--tableCardHoverTransform);
+                box-shadow: var(--tableCardHoverBoxShadow);
             }
         }
 
@@ -187,7 +218,7 @@
             > * {
                 display: block;
                 font-size: 1rem;
-                color: #333;
+                color: var(--tableCellTextColor);
             }
         }
 
@@ -198,7 +229,8 @@
 
         // Zebra striping for better distinction
         tr:nth-child(even) {
-            background-color: #fafafa;
+            background-color: var(--stripedRowBgColor);
+            color: var(--stripedRowTextColor);
         }
 
         // Style specific types of content
@@ -215,40 +247,40 @@
 
         // Add dividers between cells
         td:not(:last-child) {
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--tableCellBorderColor);
         }
     }
 }
-
 
 /* Basic styling */
 .wp-block-table {
     border-collapse: collapse;
     width: 100%;
-    background-color: #fff;
+    background-color: var(--tableCellBackgroundColor);
     border-radius: 8px;
     overflow: hidden;
 }
 
 .wp-block-table th,
 .wp-block-table td {
-    border: 1px solid #ddd;
-    padding: 12px 15px;
+    border: 1px solid var(--tableBorderColor);
+    padding: var(--tableCellPadding);
     text-align: left;
 }
 
 .wp-block-table th {
-    background-color: var(--primaryTableColor, #007cba);
-    color: #fff;
+    background-color: var(--primaryTableColor);
+    color: var(--thTypographyColor);
     font-weight: bold;
 }
 
 .wp-block-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: var(--stripedRowBgColor);
+    color: var(--stripedRowTextColor);
 }
 
 .wp-block-table tr:hover {
-    background-color: #e9f5ff;
+    background-color: var(--tableRowHoverBackgroundColor);
 }
 
 .wp-block-table td {
@@ -276,7 +308,7 @@
 }
 
 .table-controls button {
-    background-color: var(--primaryTableColor, #007cba);
+    background-color: var(--primaryTableColor);
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -286,5 +318,17 @@
 }
 
 .table-controls button:hover {
-    background-color: var(--primaryTableColor, #007cba);
+    background-color: #005a8e;
+}
+
+.table-controls input[type="text"] {
+    padding: 10px;
+    border: 1px solid var(--tableBorderColor);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.table-controls input[type="text"]::placeholder {
+    color: #999;
+    font-style: italic;
 }
