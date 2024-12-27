@@ -1,4 +1,7 @@
 /* Modern table styling in editor */
+.editor-styles-wrapper {
+
+
 [data-type="maw/responsive-tables"] .table-container {
     background: #fff;
     border-radius: 8px;
@@ -15,10 +18,9 @@
 
 /* Header cells styling */
 [data-type="maw/responsive-tables"] thead th {
-    background: #f8f9fa;
+
     position: relative;
-    padding: 12px;
-    border: 1px solid #e2e8f0;
+
 }
 
 /* Remove Column Button styling */
@@ -26,14 +28,19 @@
     position: absolute;
     top: 4px;
     right: 4px;
-    padding: 4px !important;
-    min-width: 24px;
-    height: 24px;
+    padding: 2px !important;
+    min-width: 24px !important;
+    width: 24px !important;
+    max-width: 24px !important;
+    min-height: 24px !important;
+    height: 24px !important;
+    max-height: 24px !important;
     border-radius: 50%;
     background: #fff;
     border: 1px solid #e2e8f0;
     opacity: 0;
     transition: all 0.2s ease;
+    box-sizing: border-box !important;
 }
 
 [data-type="maw/responsive-tables"] th:hover .remove-column-button {
@@ -41,17 +48,11 @@
 }
 
 [data-type="maw/responsive-tables"] .remove-column-button:hover {
-    background: #f44336;
+    background: #9f1cc0;
     color: white;
-    border-color: #f44336;
+    border-color: #9f1cc0;
 }
 
-/* Table cell styling */
-[data-type="maw/responsive-tables"] td {
-    padding: 12px;
-    border: 1px solid #e2e8f0;
-    position: relative;
-}
 
 /* Remove Row Button styling */
 [data-type="maw/responsive-tables"] .remove-row-button {
@@ -63,6 +64,14 @@
     border: 1px solid #e2e8f0;
     opacity: 0;
     transition: all 0.2s ease;
+    padding: 2px !important;
+    min-width: 24px !important;
+    width: 24px !important;
+    max-width: 24px !important;
+    min-height: 24px !important;
+    height: 24px !important;
+    max-height: 24px !important;
+    box-sizing: border-box !important;
 }
 
 [data-type="maw/responsive-tables"] tr:hover .remove-row-button {
@@ -70,9 +79,9 @@
 }
 
 [data-type="maw/responsive-tables"] .remove-row-button:hover {
-    background: #f44336;
+    background: #9f1cc0;
     color: white;
-    border-color: #f44336;
+    border-color: #9f1cc0;
 }
 
 /* Text inputs styling */
@@ -138,4 +147,6 @@
     [data-type="maw/responsive-tables"] .table-container {
         padding: 10px;
     }
+}
+
 }

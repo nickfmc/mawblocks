@@ -1,71 +1,26 @@
 import React, { useMemo, useCallback, useEffect } from 'react';
-
-import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { debounce } from '@wordpress/compose';
-
-
+import { registerBlockType } from '@wordpress/blocks';
 import { 
     PanelBody, 
     TextControl, 
-    ToggleControl, 
-    Button, 
     SelectControl,
-    IconButton
+    IconButton,
+    ColorPicker,
+    Button
 } from '@wordpress/components'; 
+import { __ } from '@wordpress/i18n';
 import { useTable, useSortBy, useFilters, usePagination, useResizeColumns } from 'react-table';
 import './style.scss';
 
-registerBlockType('maw/responsive-tables', {
-    title: 'Advanced Responsive Table',
-    icon: 'grid-view',
-    category: 'common',
-    attributes: {
-        columns: {
-            type: 'array',
-            default: [
-                { Header: 'Column 1', accessor: 'col1' },
-                { Header: 'Column 2', accessor: 'col2' },
-            ]
-        },
-        data: {
-            type: 'array',
-            default: [
-                { col1: 'Data 1', col2: 'Data 2' },
-            ]
-        },
-        responsiveMode: {
-            type: 'string',
-            default: 'stack'
-        },
-        enableFeatures: {
-            type: 'object',
-            default: {
-                sorting: true,
-                filtering: true,
-                pagination: true,
-                resize: true,
-                draggable: true
-            }
-        },
-        styling: {
-            type: 'object',
-            default: {
-                borderColor: '#dddddd',
-                headerBg: '#f8f9fa',
-                stripedRows: true,
-                fontSize: '14px'
-            }
-        }
-    },
 
-edit: function EditComponent({ attributes, setAttributes }) {
+
+function Edit({ attributes, setAttributes }) {
     const {
         columns,
         data,
         responsiveMode,
-        enableFeatures,
-        styling
     } = attributes;
 
     // Add local state for editing
@@ -191,6 +146,14 @@ edit: function EditComponent({ attributes, setAttributes }) {
     return (
         <>
             <InspectorControls>
+            <PanelBody title={ __('Table Styles') }>
+    <ColorPicker
+        label={ __('Primary Color') }
+        value={ attributes.primaryTableColor }
+        onChange={ (color) => setAttributes({ primaryTableColor: color }) }
+        enableAlpha  // Enable transparency
+    />
+</PanelBody>
                 <PanelBody title="Table Settings">
                     <SelectControl
                         label="Responsive Mode"
@@ -204,9 +167,10 @@ edit: function EditComponent({ attributes, setAttributes }) {
                     />
                     
                 </PanelBody>
+                
             </InspectorControls>
 
-            <div {...useBlockProps()}>
+            <div {...useBlockProps()} style={{ '--primaryTableColor': attributes.primaryTableColor }}>
                 <div className={`table-container ${responsiveMode}`}>
                     <table className="wp-block-table">
                         <thead>
@@ -218,7 +182,11 @@ edit: function EditComponent({ attributes, setAttributes }) {
                                             onChange={(value) => handleHeaderChange(columnIndex, value)}
                                         />
                                         <IconButton
-                                            icon="no-alt"
+                                            icon={
+                                                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" />
+                                                </svg>
+                                            }
                                             label="Remove Column"
                                             onClick={() => removeColumn(columnIndex)}
                                             className="remove-column-button"
@@ -241,7 +209,11 @@ edit: function EditComponent({ attributes, setAttributes }) {
                                     ))}
                                     <td>
                                         <IconButton
-                                            icon="no-alt"
+                                            icon={
+                                                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" />
+                                                </svg>
+                                            }
                                             label="Remove Row"
                                             onClick={() => removeRow(rowIndex)}
                                             className="remove-row-button"
@@ -271,14 +243,14 @@ edit: function EditComponent({ attributes, setAttributes }) {
             </div>
         </>
     );
-},
+}
 
 
-    save: function SaveComponent({ attributes }) {
+function Save({ attributes }) {
         const { columns, data, responsiveMode } = attributes;
 
         return (
-            <div {...useBlockProps.save()} className={`table-container ${responsiveMode}`}>
+            <div {...useBlockProps.save()} className={`table-container ${responsiveMode}`} style={{ '--primaryTableColor': attributes.primaryTableColor }}>
                 <table className="wp-block-table">
                     <thead>
                         <tr>
@@ -305,4 +277,9 @@ edit: function EditComponent({ attributes, setAttributes }) {
             </div>
         );
     }
-});
+    export { Edit, Save };
+
+    registerBlockType('maw/responsive-tables', {
+        edit: Edit,
+        save: Save
+    });

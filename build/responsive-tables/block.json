@@ -1,0 +1,65 @@
+{
+  "apiVersion": 3,
+  "name": "maw/responsive-tables",
+  "title": "Advanced Responsive Table",
+  "category": "widgets",
+  "icon": "grid-view",
+  "description": "Responsive tables block",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "maw",
+  "editorScript": "file:../../build/maw-responsive-tables.js",
+  "style": "file:../../build/style-maw-responsive-tables.css",
+  "attributes": {
+    "primaryTableColor": {
+      "type": "string",
+      "default": "#007cba"
+    },
+    "columns": {
+      "type": "array",
+      "default": [
+        {
+          "Header": "Column 1",
+          "accessor": "col1"
+        },
+        {
+          "Header": "Column 2",
+          "accessor": "col2"
+        }
+      ]
+    },
+    "data": {
+      "type": "array",
+      "default": [
+        {
+          "col1": "Data 1",
+          "col2": "Data 2"
+        }
+      ]
+    },
+    "responsiveMode": {
+      "type": "string",
+      "default": "stack"
+    },
+    "enableFeatures": {
+      "type": "object",
+      "default": {
+        "sorting": true,
+        "filtering": true,
+        "pagination": true,
+        "resize": true,
+        "draggable": true
+      }
+    },
+    "styling": {
+      "type": "object",
+      "default": {
+        "borderColor": "#dddddd",
+        "headerBg": "#f8f9fa",
+        "stripedRows": true,
+        "fontSize": "14px"
+      }
+    }
+  }
+}

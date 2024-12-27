@@ -1,4 +1,4 @@
-$primary-color: var(--table-primary-color, #007cba);
+
 
 
 .table-container {
@@ -61,7 +61,8 @@ $primary-color: var(--table-primary-color, #007cba);
                 content: attr(data-label);
                 display: block;
                 margin-bottom: 0.5rem;
-                color: #8792a2;
+                color: var(--primaryTableColor, #007cba);
+
                 font-size: 0.75rem;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -237,7 +238,7 @@ $primary-color: var(--table-primary-color, #007cba);
 }
 
 .wp-block-table th {
-    background-color: $primary-color;
+    background-color: var(--primaryTableColor, #007cba);
     color: #fff;
     font-weight: bold;
 }
@@ -275,7 +276,7 @@ $primary-color: var(--table-primary-color, #007cba);
 }
 
 .table-controls button {
-    background-color: $primary-color;
+    background-color: var(--primaryTableColor, #007cba);
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -285,5 +286,5 @@ $primary-color: var(--table-primary-color, #007cba);
 }
 
 .table-controls button:hover {
-    background-color: #005a8e;
+    background-color: var(--primaryTableColor, #007cba);
 }
