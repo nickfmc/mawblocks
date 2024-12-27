@@ -31,3 +31,21 @@ function maw_enqueue_block_editor_assets() {
     );
 }
 add_action('enqueue_block_editor_assets', 'maw_enqueue_block_editor_assets');
+
+
+// enable shortcodes in the table block
+function process_table_shortcodes($block_content, $block) {
+    if ($block['blockName'] === 'maw/responsive-tables') {
+        return do_shortcode($block_content);
+    }
+    return $block_content;
+}
+add_filter('render_block', 'process_table_shortcodes', 10, 2);
+// END enable shortcodes in the table block
+
+//simple shortcode to display the current year
+function maw_current_year() {
+    return date('Y');
+}
+add_shortcode('current_year', 'maw_current_year');
+// END simple shortcode to display the current year

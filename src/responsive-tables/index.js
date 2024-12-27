@@ -265,10 +265,12 @@ function Save({ attributes }) {
                                 {columns.map((column, colIndex) => (
                                     <td 
                                     key={colIndex}
-                                    data-label={column.Header} // Add this line
-                                >
-                                        {row[column.accessor]}
-                                    </td>
+                                    data-label={column.Header}
+                                    // Use dangerouslySetInnerHTML to preserve shortcodes
+                                    dangerouslySetInnerHTML={{
+                                        __html: row[column.accessor]
+                                    }}
+                                />
                                 ))}
                             </tr>
                         ))}
