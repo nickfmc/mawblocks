@@ -21,6 +21,7 @@ function Edit({ attributes, setAttributes }) {
         columns,
         data,
         responsiveMode,
+        primaryTableColor
     } = attributes;
 
     // Add local state for editing
@@ -149,8 +150,8 @@ function Edit({ attributes, setAttributes }) {
             <PanelBody title={ __('Table Styles') }>
     <ColorPicker
         label={ __('Primary Color') }
-        value={ attributes.primaryTableColor }
-        onChange={ (color) => setAttributes({ primaryTableColor: color }) }
+        color={ primaryTableColor }
+        onChangeComplete={ (color) => setAttributes({ primaryTableColor: color.hex }) }
         enableAlpha  // Enable transparency
     />
 </PanelBody>
@@ -170,7 +171,7 @@ function Edit({ attributes, setAttributes }) {
                 
             </InspectorControls>
 
-            <div {...useBlockProps()} style={{ '--primaryTableColor': attributes.primaryTableColor }}>
+            <div {...useBlockProps()} style={{ '--primaryTableColor': primaryTableColor }}>
                 <div className={`table-container ${responsiveMode}`}>
                     <table className="wp-block-table">
                         <thead>
@@ -247,10 +248,10 @@ function Edit({ attributes, setAttributes }) {
 
 
 function Save({ attributes }) {
-        const { columns, data, responsiveMode } = attributes;
+        const { columns, data, responsiveMode, primaryTableColor } = attributes;
 
         return (
-            <div {...useBlockProps.save()} className={`table-container ${responsiveMode}`} style={{ '--primaryTableColor': attributes.primaryTableColor }}>
+            <div {...useBlockProps.save()} className={`table-container ${responsiveMode}`} style={{ '--primaryTableColor': primaryTableColor }}>
                 <table className="wp-block-table">
                     <thead>
                         <tr>
