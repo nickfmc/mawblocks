@@ -27,22 +27,28 @@
     --stripedRowTextColor: #333333;
 }
 
-.table-container {
+
+
+
+.table-container.maw-table-container {
     max-width: 100%;
     overflow-x: auto;
     padding: 1rem;
-    background-color: var(--tableBackgroundColor);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    // background-color: var(--tableBackgroundColor);
+    // border-radius: 8px;
+    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.table-container table {
+.table-container.maw-table-container table {
     display: table;
     margin-top: 0;
     margin-bottom: 0;
 }
 
+.maw-table-container {
+
 table {
+    border: 0;
     th {
         font-size: var(--thFontSize);
     }
@@ -69,7 +75,7 @@ table {
 
         tr {
             margin-bottom: 1.5rem;
-            border-radius: 12px;
+            // border-radius: 12px;
             background: #ffffff;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -257,7 +263,7 @@ table {
     border-collapse: collapse;
     width: 100%;
     background-color: var(--tableCellBackgroundColor);
-    border-radius: 8px;
+    // border-radius: 8px;
     overflow: hidden;
 }
 
@@ -331,4 +337,6 @@ table {
 .table-controls input[type="text"]::placeholder {
     color: #999;
     font-style: italic;
+}
+
 }

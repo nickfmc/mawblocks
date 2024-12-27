@@ -293,7 +293,7 @@ function Edit({ attributes, setAttributes }) {
                 '--stripedRowBgColor': stripedRowBgColor,
                 '--stripedRowTextColor': stripedRowTextColor
             }}>
-                <div className={`table-container ${responsiveMode}`}>
+                <div className={`maw-table-container table-container ${responsiveMode}`}>
                     <table className="wp-block-table">
                         <thead>
                             <tr>
@@ -325,13 +325,21 @@ function Edit({ attributes, setAttributes }) {
                         </thead>
                         <tbody>
                             {data.map((row, rowIndex) => (
-                                <tr key={rowIndex}>
+                                <tr key={rowIndex} style={{
+                                    backgroundColor: stripedRows && rowIndex % 2 !== 0 ? stripedRowBgColor : 'transparent',
+                                    color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
+                                }}>
                                     {columns.map((column, columnIndex) => (
-                                        <td key={`${rowIndex}-${columnIndex}`} data-label={column.Header} >
+                                        <td key={`${rowIndex}-${columnIndex}`} data-label={column.Header} style={{
+                                            color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
+                                        }}>
                                             <TextControl
                                                 value={(editingCells[`${rowIndex}-${column.accessor}`] ?? row[column.accessor]) || ''}
                                                 
                                                 onChange={(value) => handleCellChange(rowIndex, column.accessor, value)}
+                                                style={{
+                                                    color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
+                                                }}
                                             />
                                         </td>
                                     ))}
@@ -378,7 +386,7 @@ function Save({ attributes }) {
         const { columns, data, responsiveMode, primaryTableColor, thTypographyColor, thFontSize, stripedRows, stripedRowBgColor, stripedRowTextColor } = attributes;
 
         return (
-            <div {...useBlockProps.save()} className={`table-container ${responsiveMode}`} style={{ 
+            <div {...useBlockProps.save()} className={`maw-table-container table-container ${responsiveMode}`} style={{ 
                 '--primaryTableColor': primaryTableColor,
                 '--thTypographyColor': thTypographyColor,
                 '--thFontSize': thFontSize ? `${thFontSize}px` : undefined,
