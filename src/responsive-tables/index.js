@@ -293,7 +293,7 @@ function Edit({ attributes, setAttributes }) {
                 '--stripedRowBgColor': stripedRowBgColor,
                 '--stripedRowTextColor': stripedRowTextColor
             }}>
-                <div className={`maw-table-container table-container ${responsiveMode}`}>
+                <div className={`maw-table-container table-container ${responsiveMode} ${stripedRows ? 'striped' : ''}`}>
                     <table className="wp-block-table">
                         <thead>
                             <tr>
@@ -360,21 +360,33 @@ function Edit({ attributes, setAttributes }) {
                         </tbody>
                     </table>
             
-                    <div className="table-controls">
-                        <Button 
-                            isPrimary 
-                            onClick={addColumn}
-                            style={{ marginRight: '10px' }}
-                        >
-                            Add Column
-                        </Button>
-                        <Button 
-                            isPrimary 
-                            onClick={addRow}
-                        >
-                            Add Row
-                        </Button>
-                    </div>
+                   <div className="table-controls">
+                       <Button 
+                           primary 
+                           onClick={addColumn}
+                           style={{ marginRight: '10px' }}
+                           icon={
+                               <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                   <path d="M19,3H5C3.89,3,3,3.89,3,5v14c0,1.11,0.89,2,2,2h14c1.11,0,2-0.89,2-2V5C21,3.89,20.11,3,19,3z M19,19H5V5h14V19z M11,17h2v-4h4v-2h-4V7h-2v4H7v2h4V17z"/>
+                               </svg>
+                           }
+                       >
+                           Add Column
+                       </Button>
+                       <Button 
+                           primary 
+                           onClick={addRow}
+                           icon={
+                               <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                   <path d="M20,13H4c-0.55,0-1,0.45-1,1v6c0,0.55,0.45,1,1,1h16c0.55,0,1-0.45,1-1v-6C21,13.45,20.55,13,20,13z M20,3H4C3.45,3,3,3.45,3,4v6c0,0.55,0.45,1,1,1h16c0.55,0,1-0.45,1-1V4C21,3.45,20.55,3,20,3z M19,9H5V5h14V9z M11,15h2v2h-2V15z"/>
+                                   <path d="M11,7h2v2h-2V7z"/>
+                               </svg>
+                           }
+                       >
+                           Add Row
+                       </Button>
+                   </div>
+                   
                 </div>
             </div>
         </>
@@ -385,14 +397,19 @@ function Edit({ attributes, setAttributes }) {
 function Save({ attributes }) {
         const { columns, data, responsiveMode, primaryTableColor, thTypographyColor, thFontSize, stripedRows, stripedRowBgColor, stripedRowTextColor } = attributes;
 
-        return (
-            <div {...useBlockProps.save()} className={`maw-table-container table-container ${responsiveMode}`} style={{ 
+        const blockProps = useBlockProps.save({
+            className: `maw-table-container table-container ${responsiveMode} ${stripedRows ? 'striped' : ''}`,
+            style: { 
                 '--primaryTableColor': primaryTableColor,
                 '--thTypographyColor': thTypographyColor,
                 '--thFontSize': thFontSize ? `${thFontSize}px` : undefined,
                 '--stripedRowBgColor': stripedRowBgColor,
                 '--stripedRowTextColor': stripedRowTextColor
-            }}>
+            }
+        });
+
+        return (
+            <div {...blockProps}>
                 <table className="wp-block-table">
                     <thead>
                         <tr>

@@ -234,7 +234,7 @@ table {
         }
 
         // Zebra striping for better distinction
-        tr:nth-child(even) {
+        &.striped tr:nth-child(even) {
             background-color: var(--stripedRowBgColor);
             color: var(--stripedRowTextColor);
         }
@@ -280,11 +280,10 @@ table {
     font-weight: bold;
 }
 
-.wp-block-table tr:nth-child(even) {
+&.striped .wp-block-table tr:nth-child(even) {
     background-color: var(--stripedRowBgColor);
     color: var(--stripedRowTextColor);
 }
-
 .wp-block-table tr:hover {
     background-color: var(--tableRowHoverBackgroundColor);
 }

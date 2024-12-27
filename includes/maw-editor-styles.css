@@ -48,9 +48,9 @@
 }
 
 [data-type="maw/responsive-tables"] .remove-column-button:hover {
-    background: #9f1cc0;
+    background: linear-gradient(135deg, #9333ea, #7c3aed);
     color: white;
-    border-color: #9f1cc0;
+    border-color: #7c3aed;
 }
 
 
@@ -76,12 +76,13 @@
 
 [data-type="maw/responsive-tables"] tr:hover .remove-row-button {
     opacity: 1;
+    
 }
 
 [data-type="maw/responsive-tables"] .remove-row-button:hover {
-    background: #9f1cc0;
+    background: linear-gradient(135deg, #9333ea, #7c3aed);
     color: white;
-    border-color: #9f1cc0;
+    border-color: #7c3aed;
 }
 
 /* Text inputs styling */
@@ -99,13 +100,13 @@
 
 /* Add Column/Row buttons styling */
 [data-type="maw/responsive-tables"] .table-controls {
-    margin-top: 80px !important;
+    margin-top: 50px !important;
     display: flex;
     gap: 10px;
 }
 
 [data-type="maw/responsive-tables"] .table-controls button {
-    background: #007cba;
+    background: linear-gradient(135deg, #9333ea, #7c3aed);  /* Purple gradient */
     color: white;
     border: none;
     padding: 8px 16px;
@@ -115,10 +116,11 @@
 }
 
 [data-type="maw/responsive-tables"] .table-controls button:hover {
-    background: #006ba1;
+    background: linear-gradient(135deg, #7e22ce, #6d28d9);  /* Slightly darker purple gradient on hover */
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);  /* Purple-tinted shadow */
 }
+
 
 /* Hover states */
 [data-type="maw/responsive-tables"] tr:hover {
