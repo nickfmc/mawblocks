@@ -9,8 +9,9 @@ import {
     IconButton,
     ColorPicker,
     Button,
-    ToggleControl,
-    RangeControl,
+    ColorPalette, 
+    RangeControl, 
+    ToggleControl, 
     FontSizePicker
 } from '@wordpress/components'; 
 import { __ } from '@wordpress/i18n';
@@ -29,7 +30,8 @@ function Edit({ attributes, setAttributes }) {
         thFontSize,
         stripedRows,
         stripedRowBgColor,
-        stripedRowTextColor
+        stripedRowTextColor,
+        
     } = attributes;
 
     // Add local state for editing
@@ -155,68 +157,134 @@ function Edit({ attributes, setAttributes }) {
     return (
         <>
             <InspectorControls>
-            <PanelBody title={ __('Table Styles') }>
-    <ColorPicker
-        label={ __('Primary Color') }
-        color={ primaryTableColor }
-        onChangeComplete={ (color) => setAttributes({ primaryTableColor: color.hex }) }
-        enableAlpha  // Enable transparency
-    />
-  
-  <PanelBody title={__('Table Header Typography Settings')}>
-  <ColorPicker
-        label={__('Header Text Color')}
-        color={ thTypographyColor }
-        onChangeComplete={ (color) => setAttributes({ thTypographyColor: color.hex }) }
-        enableAlpha
-    />
-    
-    <RangeControl
-        label={__('Header Font Size')}
-        value={thFontSize}
-        onChange={(value) => setAttributes({ thFontSize: value })}
-        min={10}
-        max={50}
-    />
-</PanelBody>
-
-    <ToggleControl
-        label={ __('Striped Rows') }
-        checked={ stripedRows }
-        onChange={ (value) => setAttributes({ stripedRows: value }) }
-    />
-    {stripedRows && (
-        <>
-            <ColorPicker
-                label={ __('Striped Row Background Color') }
-                color={ stripedRowBgColor }
-                onChangeComplete={ (color) => setAttributes({ stripedRowBgColor: color.hex }) }
-                enableAlpha  // Enable transparency
-            />
-            <ColorPicker
-                label={ __('Striped Row Text Color') }
-                color={ stripedRowTextColor }
-                onChangeComplete={ (color) => setAttributes({ stripedRowTextColor: color.hex }) }
-                enableAlpha  // Enable transparency
-            />
-        </>
-    )}
-</PanelBody>
-                <PanelBody title="Table Settings">
+                {/* Color Settings Panel */}
+                <PanelBody 
+                    title={__('Color Settings')} 
+                    initialOpen={true}
+                    className="custom-panel-body"
+                >
+                    <div className="components-base-control">
+                        <strong className="components-base-control__label">
+                            {__('Table Primary Color')}
+                        </strong>
+                        <ColorPalette
+                            colors={[
+                                { name: 'Primary', color: '#007cba' },
+                                { name: 'Secondary', color: '#444444' },
+                                // Add more theme colors as needed
+                            ]}
+                            value={primaryTableColor}
+                            onChange={(color) => setAttributes({ primaryTableColor: color })}
+                            disableCustomColors={false}
+                            clearable={false}
+                        />
+                    </div>
+                </PanelBody>
+            
+                {/* Typography Panel */}
+                <PanelBody 
+                    title={__('Typography Settings')} 
+                    initialOpen={false}
+                    icon="text"
+                >
+                    <div className="components-base-control">
+                        <strong className="components-base-control__label">
+                            {__('Header Text Color')}
+                        </strong>
+                        <ColorPalette
+                            colors={[
+                                { name: 'White', color: '#ffffff' },
+                                { name: 'Black', color: '#000000' },
+                                // Add more theme colors
+                            ]}
+                            value={thTypographyColor}
+                            onChange={(color) => setAttributes({ thTypographyColor: color })}
+                            disableCustomColors={false}
+                            clearable={false}
+                        />
+                    </div>
+            
+                    <RangeControl
+                        label={__('Header Font Size')}
+                        value={thFontSize}
+                        onChange={(value) => setAttributes({ thFontSize: value })}
+                        min={10}
+                        max={50}
+                        beforeIcon="editor-textcolor"
+                        separatorType="fullWidth"
+                    />
+                </PanelBody>
+            
+                {/* Row Styling Panel */}
+                <PanelBody 
+                    title={__('Row Styling')} 
+                    initialOpen={false}
+                    icon="table-row-after"
+                >
+                    <ToggleControl
+                        label={__('Enable Striped Rows')}
+                        help={__('Alternate background colors for rows')}
+                        checked={stripedRows}
+                        onChange={(value) => setAttributes({ stripedRows: value })}
+                    />
+                    
+                    {stripedRows && (
+                        <div className="striped-rows-settings">
+                            <div className="components-base-control">
+                                <strong className="components-base-control__label">
+                                    {__('Striped Row Background')}
+                                </strong>
+                                <ColorPalette
+                                    colors={[
+                                        { name: 'Light Gray', color: '#f5f5f5' },
+                                        { name: 'Light Blue', color: '#f0f7fc' },
+                                        // Add more theme colors
+                                    ]}
+                                    value={stripedRowBgColor}
+                                    onChange={(color) => setAttributes({ stripedRowBgColor: color })}
+                                    disableCustomColors={false}
+                                />
+                            </div>
+            
+                            <div className="components-base-control">
+                                <strong className="components-base-control__label">
+                                    {__('Striped Row Text')}
+                                </strong>
+                                <ColorPalette
+                                    colors={[
+                                        { name: 'Dark Gray', color: '#333333' },
+                                        { name: 'Black', color: '#000000' },
+                                        // Add more theme colors
+                                    ]}
+                                    value={stripedRowTextColor}
+                                    onChange={(color) => setAttributes({ stripedRowTextColor: color })}
+                                    disableCustomColors={false}
+                                />
+                            </div>
+                        </div>
+                    )}
+                </PanelBody>
+            
+                {/* Responsive Settings Panel */}
+                <PanelBody 
+                    title={__('Responsive Settings')} 
+                    initialOpen={false}
+                    icon="smartphone"
+                >
                     <SelectControl
-                        label="Responsive Mode"
+                        label={__('Mobile Display Mode')}
+                        help={__('Choose how the table displays on mobile devices')}
                         value={responsiveMode}
                         options={[
-                            { label: 'Stack', value: 'stack' },
-                            { label: 'Scroll', value: 'scroll' },
-                            { label: 'Cards', value: 'cards' }
+                            { label: 'Stack Rows', value: 'stack' },
+                            { label: 'Horizontal Scroll', value: 'scroll' },
+                            { label: 'Card View', value: 'cards' }
                         ]}
                         onChange={(value) => setAttributes({ responsiveMode: value })}
                     />
-                    
                 </PanelBody>
-                
             </InspectorControls>
+            
 
             <div {...useBlockProps()} style={{ 
                 '--primaryTableColor': primaryTableColor,

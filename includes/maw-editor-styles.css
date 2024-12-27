@@ -150,3 +150,17 @@
 }
 
 }
+
+
+.custom-panel-body .components-base-control {
+    margin-bottom: 24px;
+}
+
+.components-base-control__label {
+    margin-bottom: 8px;
+    display: block;
+}
+
+.striped-rows-settings {
+    margin-top: 16px;
+}
