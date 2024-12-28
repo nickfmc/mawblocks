@@ -287,7 +287,8 @@ function Edit({ attributes, setAttributes }) {
                             { label: 'Horizontal Scroll', value: 'scroll' },
                             { label: 'Card View', value: 'cards' },
                             { label: 'Stack Rows', value: 'stack' },
-                            { label: 'Stack Columns', value: 'list' }
+                            { label: 'Stack Columns', value: 'list' },
+                            { label: 'Chart View', value: 'chart' }  // Add this new option
                         ]}
                         onChange={(value) => setAttributes({ responsiveMode: value })}
                     />
@@ -525,6 +526,44 @@ function Save({ attributes }) {
                         </table>
                     </div>
                 )}
+
+
+
+              {/* Chart view version */}
+              {responsiveMode === 'chart' && (
+                  <div className="chart-view-table">
+                      {/* Overall header using top-left TH content */}
+                      {columns[0]?.Header && (
+                          <div className="chart-main-header">
+                              {columns[0].Header}
+                          </div>
+                      )}
+                      
+                      {columns.slice(1).map((column, colIndex) => (
+                          <div className="chart-column" key={colIndex}>
+                              <div className="chart-header">
+                                  {column.Header}
+                              </div>
+                              
+                              {data.map((row, rowIndex) => (
+                                  <div className="chart-row" key={rowIndex}>
+                                      <div className="chart-cell"
+                                          data-row-header={row[columns[0].accessor]}
+                                          data-column-header={column.Header}
+                                          dangerouslySetInnerHTML={{
+                                              __html: row[column.accessor]
+                                          }}
+                                      />
+                                  </div>
+                              ))}
+                          </div>
+                      ))}
+                  </div>
+              )}
+              
+               
+               
+
             </div>
         );
     }

@@ -27,7 +27,19 @@
     --stripedRowTextColor: #333333;
 }
 
+// mobile views that need new markup.
+.mobile-list-table, .chart-view-table {
+    display: none;
+}
 
+// Hide regular table when in chart view on mobile
+@media (max-width: 768px) {
+    .table-container.chart {
+        .desktop-table {
+            display: none;
+        }
+    }
+}
 
 
 .table-container.maw-table-container {
@@ -45,9 +57,7 @@
     margin-bottom: 0;
 }
 
-.mobile-list-table {
-    display: none;
-}
+
 
 .maw-table-container {
 
@@ -279,6 +289,72 @@ table {
         }
     }
 }
+
+
+// Chart mode
+.chart-view-table {
+    @media (max-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px;
+
+    .chart-main-header {
+        width: 100%;
+        text-align: center;
+        font-size: 1.25em;
+        font-weight: bold;
+        padding: 15px;
+        margin-bottom: 20px;
+        background-color: var(--primaryTableColor);
+        color: var(--thTypographyColor);
+        border-radius: 4px;
+    }
+
+    .chart-column {
+        flex: 1 1 250px; // Adjust minimum width as needed
+        margin-bottom: 20px;
+
+        .chart-header {
+            background-color: var(--primaryTableColor);
+            color: var(--thTypographyColor);
+            padding: 10px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 4px 4px 0 0;
+
+            &.empty-header {
+                visibility: hidden;
+            }
+        }
+
+        .chart-row {
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+
+            .row-header {
+                font-weight: bold;
+                padding: 8px;
+                background-color: #f5f5f5;
+            }
+
+            .chart-cell {
+                padding: 8px;
+                
+                &:before {
+                    content: attr(data-row-header);
+                    font-weight: bold;
+                    display: block;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
+}
+}
+
+
+
 
 /* Basic styling */
 .wp-block-table {
