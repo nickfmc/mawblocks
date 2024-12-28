@@ -45,6 +45,10 @@
     margin-bottom: 0;
 }
 
+.mobile-list-table {
+    display: none;
+}
+
 .maw-table-container {
 
 table {
@@ -60,17 +64,16 @@ table {
         padding: 0;
         
         table,
-        thead,
         tbody,
         tr,
         th,
         td {
-            display: block;
+            display: block !important;
             width: 100%;
         }
 
         thead {
-            display: none;
+            display: none !important;
         }
 
         tr {
@@ -130,43 +133,22 @@ table {
                 background-color: rgba(0, 0, 0, 0.01);
             }
         }
+        &.row-headers {
+            td {
+                &:before {
+                    display: none;
+                }
+            }
+        }
     }
 }
 
 // Scroll mode
 &.scroll {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+    -webkit-overflow-scrolling: touch;
     
-    table {
-        min-width: 100%;
-        white-space: nowrap; // Prevent text wrapping
-    }
-
-    th, td {
-        min-width: 150px; // Prevent columns from becoming too narrow
-       
-        padding: 0.75rem 1rem;
-        @media (max-width: 768px) {
-            max-width: 400px; // Prevent columns from becoming too wide
-        }
-        
-        // Handle long content
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    // Special cases for specific column types
-    .column-small {
-        min-width: 100px; // Smaller minimum for columns like ID or status
-    }
-
-    .column-large {
-        min-width: 200px; // Larger minimum for columns with more content
-    }
-
-    // Add shadow indication for scroll
+    // Move these background properties BEFORE any nested rules
     background: 
         linear-gradient(to right, white 30%, rgba(255,255,255,0)),
         linear-gradient(to right, rgba(255,255,255,0), white 70%) 100% 0,
@@ -176,7 +158,33 @@ table {
     background-color: white;
     background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
     background-attachment: local, local, scroll, scroll;
+
+    // Nested rules come after
+    table {
+        min-width: 100%;
+        white-space: nowrap;
+    }
+
+    th, td {
+        min-width: 150px;
+        padding: 0.75rem 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        @media (max-width: 768px) {
+            max-width: 400px;
+        } 
+    }
+
+    .column-small {
+        min-width: 100px;
+    }
+
+    .column-large {
+        min-width: 200px;
+    }
 }
+
 
 /* Cards mode */
 @media (max-width: 768px) {
@@ -254,6 +262,20 @@ table {
         // Add dividers between cells
         td:not(:last-child) {
             border-bottom: 1px solid var(--tableCellBorderColor);
+        }
+    }
+
+
+
+    &.list {
+        @media (max-width: 768px) {
+            .desktop-table {
+                display: none;
+            }
+
+            .mobile-list-table {
+                display: block;
+            }
         }
     }
 }
@@ -338,4 +360,24 @@ table {
     font-style: italic;
 }
 
+}
+
+
+.row-headers {
+    th[scope="row"] {
+        background-color: var(--primaryTableColor);
+        color: var(--thTypographyColor);
+        font-size: var(--thFontSize);
+        text-align: left;
+    }
+
+    // Responsive handling
+    @media screen and (max-width: 768px) {
+        &.cards, &.list {
+            th[scope="row"] {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
 }

@@ -14,6 +14,7 @@ import {
     ToggleControl, 
     FontSizePicker
 } from '@wordpress/components'; 
+import { tableRowBefore  } from '@wordpress/icons'; // Import the icon
 import { __ } from '@wordpress/i18n';
 import { useTable, useSortBy, useFilters, usePagination, useResizeColumns } from 'react-table';
 import './style.scss';
@@ -159,13 +160,14 @@ function Edit({ attributes, setAttributes }) {
             <InspectorControls>
                 {/* Color Settings Panel */}
                 <PanelBody 
-                    title={__('Color Settings')} 
+                    title={__('Table Header Styling')} 
                     initialOpen={true}
                     className="custom-panel-body"
+                    icon={tableRowBefore }
                 >
                     <div className="components-base-control">
                         <strong className="components-base-control__label">
-                            {__('Table Primary Color')}
+                            {__('Table Header Background')}
                         </strong>
                         <ColorPalette
                             colors={[
@@ -179,14 +181,7 @@ function Edit({ attributes, setAttributes }) {
                             clearable={false}
                         />
                     </div>
-                </PanelBody>
-            
-                {/* Typography Panel */}
-                <PanelBody 
-                    title={__('Typography Settings')} 
-                    initialOpen={false}
-                    icon="text"
-                >
+
                     <div className="components-base-control">
                         <strong className="components-base-control__label">
                             {__('Header Text Color')}
@@ -213,7 +208,16 @@ function Edit({ attributes, setAttributes }) {
                         beforeIcon="editor-textcolor"
                         separatorType="fullWidth"
                     />
+
+                    <ToggleControl
+        label={__('Use First Column as Row Headers')}
+        help={__('Makes the first column cells act as row headers instead of using column headers in an accessible way (Works great with stack rows in mobile display mode)')}
+        checked={attributes.firstColumnAsHeader}
+        onChange={(value) => setAttributes({ firstColumnAsHeader: value })}
+    />
                 </PanelBody>
+            
+           
             
                 {/* Row Styling Panel */}
                 <PanelBody 
@@ -264,6 +268,10 @@ function Edit({ attributes, setAttributes }) {
                         </div>
                     )}
                 </PanelBody>
+
+
+   
+
             
                 {/* Responsive Settings Panel */}
                 <PanelBody 
@@ -276,9 +284,10 @@ function Edit({ attributes, setAttributes }) {
                         help={__('Choose how the table displays on mobile devices')}
                         value={responsiveMode}
                         options={[
-                            { label: 'Stack Rows', value: 'stack' },
                             { label: 'Horizontal Scroll', value: 'scroll' },
-                            { label: 'Card View', value: 'cards' }
+                            { label: 'Card View', value: 'cards' },
+                            { label: 'Stack Rows', value: 'stack' },
+                            { label: 'Stack Columns', value: 'list' }
                         ]}
                         onChange={(value) => setAttributes({ responsiveMode: value })}
                     />
@@ -293,8 +302,10 @@ function Edit({ attributes, setAttributes }) {
                 '--stripedRowBgColor': stripedRowBgColor,
                 '--stripedRowTextColor': stripedRowTextColor
             }}>
-                <div className={`maw-table-container table-container ${responsiveMode} ${stripedRows ? 'striped' : ''}`}>
-                    <table className="wp-block-table">
+                <div className={`maw-table-container table-container ${responsiveMode} ${stripedRows ? 'striped' : ''} ${attributes.firstColumnAsHeader ? 'row-headers' : ''}`}>
+                
+                <table className="wp-block-table">
+                    {!attributes.firstColumnAsHeader && (
                         <thead>
                             <tr>
                                 {columns.map((column, columnIndex) => (
@@ -306,7 +317,6 @@ function Edit({ attributes, setAttributes }) {
                                                 color: thTypographyColor,
                                                 fontSize: thFontSize + 'px'
                                             }}
-                                            
                                             className="th-text-control"
                                         />
                                         <IconButton
@@ -323,42 +333,67 @@ function Edit({ attributes, setAttributes }) {
                                 ))}
                             </tr>
                         </thead>
-                        <tbody>
-                            {data.map((row, rowIndex) => (
-                                <tr key={rowIndex} style={{
-                                    backgroundColor: stripedRows && rowIndex % 2 !== 0 ? stripedRowBgColor : 'transparent',
-                                    color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
-                                }}>
-                                    {columns.map((column, columnIndex) => (
-                                        <td key={`${rowIndex}-${columnIndex}`} data-label={column.Header} style={{
-                                            color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
-                                        }}>
+                    )}
+                    <tbody>
+                        {data.map((row, rowIndex) => (
+                            <tr key={rowIndex} style={{
+                                backgroundColor: stripedRows && rowIndex % 2 !== 0 ? stripedRowBgColor : 'transparent',
+                                color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
+                            }}>
+                                {columns.map((column, columnIndex) => (
+                                    columnIndex === 0 && attributes.firstColumnAsHeader ? (
+                                        <th 
+                                            scope="row"
+                                            key={`${rowIndex}-${columnIndex}`}
+                                            data-label={column.Header}
+                                            style={{
+                                                color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
+                                            }}
+                                        >
                                             <TextControl
                                                 value={(editingCells[`${rowIndex}-${column.accessor}`] ?? row[column.accessor]) || ''}
-                                                
+                                                onChange={(value) => handleCellChange(rowIndex, column.accessor, value)}
+                                                style={{
+                                                    color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
+                                                }}
+                                            />
+                                        </th>
+                                    ) : (
+                                        <td 
+                                            key={`${rowIndex}-${columnIndex}`}
+                                            data-label={column.Header}
+                                            data-header={attributes.firstColumnAsHeader && columnIndex > 0 ? row[columns[0].accessor] : ''}
+                                            style={{
+                                                color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
+                                            }}
+                                        >
+                                            <TextControl
+                                                value={(editingCells[`${rowIndex}-${column.accessor}`] ?? row[column.accessor]) || ''}
                                                 onChange={(value) => handleCellChange(rowIndex, column.accessor, value)}
                                                 style={{
                                                     color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
                                                 }}
                                             />
                                         </td>
-                                    ))}
-                                    <td>
-                                        <IconButton
-                                            icon={
-                                                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" />
-                                                </svg>
-                                            }
-                                            label="Remove Row"
-                                            onClick={() => removeRow(rowIndex)}
-                                            className="remove-row-button"
-                                        />
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                                    )
+                                ))}
+                                <td>
+                                    <IconButton
+                                        icon={
+                                            <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" />
+                                            </svg>
+                                        }
+                                        label="Remove Row"
+                                        onClick={() => removeRow(rowIndex)}
+                                        className="remove-row-button"
+                                    />
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                
             
                    <div className="table-controls">
                        <Button 
@@ -395,10 +430,10 @@ function Edit({ attributes, setAttributes }) {
 
 
 function Save({ attributes }) {
-        const { columns, data, responsiveMode, primaryTableColor, thTypographyColor, thFontSize, stripedRows, stripedRowBgColor, stripedRowTextColor } = attributes;
+        const { columns, data, responsiveMode, firstColumnAsHeader, primaryTableColor, thTypographyColor, thFontSize, stripedRows, stripedRowBgColor, stripedRowTextColor } = attributes;
 
         const blockProps = useBlockProps.save({
-            className: `maw-table-container table-container ${responsiveMode} ${stripedRows ? 'striped' : ''}`,
+            className: `maw-table-container table-container ${responsiveMode} ${stripedRows ? 'striped' : ''} ${firstColumnAsHeader ? 'row-headers' : ''}`,
             style: { 
                 '--primaryTableColor': primaryTableColor,
                 '--thTypographyColor': thTypographyColor,
@@ -408,33 +443,88 @@ function Save({ attributes }) {
             }
         });
 
+        
         return (
             <div {...blockProps}>
-                <table className="wp-block-table">
-                    <thead>
-                        <tr>
-                            {columns.map((column, index) => (
-                                <th key={index}>{column.Header}</th>
+                {/* Regular table version */}
+                <div className="desktop-table">
+                    <table className="wp-block-table">
+                        {!firstColumnAsHeader && (
+                            <thead>
+                                <tr>
+                                    {columns.map((column, index) => (
+                                        <th key={index}>{column.Header}</th>
+                                    ))}
+                                </tr>
+                            </thead>
+                        )}
+                        <tbody>
+                            {data.map((row, rowIndex) => (
+                                <tr key={rowIndex}>
+                                    {columns.map((column, colIndex) => (
+                                        colIndex === 0 && firstColumnAsHeader ? (
+                                            <th 
+                                                scope="row"
+                                                key={colIndex}
+                                                data-label={column.Header}
+                                                dangerouslySetInnerHTML={{
+                                                    __html: row[column.accessor]
+                                                }}
+                                            />
+                                        ) : (
+                                            <td 
+                                                key={colIndex}
+                                                data-label={column.Header}
+                                                data-header={firstColumnAsHeader && colIndex > 0 ? row[columns[0].accessor] : ''}
+                                                dangerouslySetInnerHTML={{
+                                                    __html: row[column.accessor]
+                                                }}
+                                            />
+                                        )
+                                    ))}
+                                </tr>
                             ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((row, rowIndex) => (
-                            <tr key={rowIndex}>
+                        </tbody>
+                    </table>
+                </div>
+    
+                {/* Column-stacked version - only for list mode */}
+                {responsiveMode === 'list' && (
+                    <div className="mobile-list-table">
+                        <table className="wp-block-table">
+                            <tbody>
                                 {columns.map((column, colIndex) => (
-                                    <td 
-                                    key={colIndex}
-                                    data-label={column.Header}
-                                    // Use dangerouslySetInnerHTML to preserve shortcodes
-                                    dangerouslySetInnerHTML={{
-                                        __html: row[column.accessor]
-                                    }}
-                                />
+                                    <React.Fragment key={colIndex}>
+                                        <tr className="column-header">
+                                            <th>{column.Header}</th>
+                                        </tr>
+                                        {data.map((row, rowIndex) => (
+                                            <tr key={`${colIndex}-${rowIndex}`}>
+                                                {firstColumnAsHeader && colIndex === 0 ? (
+                                                    <th 
+                                                        scope="row"
+                                                        data-label={column.Header}
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: row[column.accessor]
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <td 
+                                                        data-label={column.Header}
+                                                        data-header={firstColumnAsHeader ? row[columns[0].accessor] : ''}
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: row[column.accessor]
+                                                        }}
+                                                    />
+                                                )}
+                                            </tr>
+                                        ))}
+                                    </React.Fragment>
                                 ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    </div>
+                )}
             </div>
         );
     }

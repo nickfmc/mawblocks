@@ -12,6 +12,10 @@
   "editorScript": "file:../../build/maw-responsive-tables.js",
   "style": "file:../../build/style-maw-responsive-tables.css",
   "attributes": {
+    "firstColumnAsHeader": {
+      "type": "boolean",
+      "default": false
+    },
     "primaryTableColor": {
       "type": "string",
       "default": "#007cba"
