@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback, useEffect } from 'react';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, RichText, BlockControls, RichTextToolbarButton  } from '@wordpress/block-editor';
 import { debounce } from '@wordpress/compose';
 import { registerBlockType } from '@wordpress/blocks';
 import { 
@@ -12,9 +12,16 @@ import {
     ColorPalette, 
     RangeControl, 
     ToggleControl, 
+    ToolbarGroup, 
     FontSizePicker
 } from '@wordpress/components'; 
 import { tableRowBefore  } from '@wordpress/icons'; // Import the icon
+import { 
+    toggleFormat, 
+    create, 
+    insert,
+
+} from '@wordpress/rich-text';
 import { __ } from '@wordpress/i18n';
 import { useTable, useSortBy, useFilters, usePagination, useResizeColumns } from 'react-table';
 import './style.scss';
@@ -157,6 +164,8 @@ function Edit({ attributes, setAttributes }) {
 
     return (
         <>
+   
+
             <InspectorControls>
                 {/* Color Settings Panel */}
                 <PanelBody 
@@ -294,6 +303,9 @@ function Edit({ attributes, setAttributes }) {
                     />
                 </PanelBody>
             </InspectorControls>
+
+           
+           
             
 
             <div {...useBlockProps()} style={{ 
@@ -311,15 +323,24 @@ function Edit({ attributes, setAttributes }) {
                             <tr>
                                 {columns.map((column, columnIndex) => (
                                     <th key={columnIndex} style={{ color: thTypographyColor }}>
-                                        <TextControl
-                                            value={editingCells[`header-${columnIndex}`] ?? column.Header}
-                                            onChange={(value) => handleHeaderChange(columnIndex, value)}
-                                            style={{ 
-                                                color: thTypographyColor,
-                                                fontSize: thFontSize + 'px'
-                                            }}
-                                            className="th-text-control"
-                                        />
+                                        
+                                        
+                                       
+                                        <RichText
+        tagName="div"
+        value={editingCells[`header-${columnIndex}`] ?? column.Header}
+        onChange={(value) => handleHeaderChange(columnIndex, value)}
+        style={{ 
+            color: thTypographyColor,
+            fontSize: thFontSize + 'px'
+        }}
+        className="th-text-control"
+        placeholder="Enter text..."
+    
+    />
+
+
+    
                                         <IconButton
                                             icon={
                                                 <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -351,13 +372,22 @@ function Edit({ attributes, setAttributes }) {
                                                 color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
                                             }}
                                         >
-                                            <TextControl
-                                                value={(editingCells[`${rowIndex}-${column.accessor}`] ?? row[column.accessor]) || ''}
-                                                onChange={(value) => handleCellChange(rowIndex, column.accessor, value)}
-                                                style={{
-                                                    color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
-                                                }}
-                                            />
+                                            
+ 
+                                            <RichText
+        tagName="div"
+        value={(editingCells[`${rowIndex}-${column.accessor}`] ?? row[column.accessor]) || ''}
+        onChange={(value) => handleCellChange(rowIndex, column.accessor, value)}
+        style={{
+            color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
+        }}
+        placeholder="Enter text..."
+    
+      
+   
+    />
+ 
+ 
                                         </th>
                                     ) : (
                                         <td 
@@ -368,13 +398,20 @@ function Edit({ attributes, setAttributes }) {
                                                 color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
                                             }}
                                         >
-                                            <TextControl
-                                                value={(editingCells[`${rowIndex}-${column.accessor}`] ?? row[column.accessor]) || ''}
-                                                onChange={(value) => handleCellChange(rowIndex, column.accessor, value)}
-                                                style={{
-                                                    color: stripedRows && rowIndex % 2 !== 0 ? stripedRowTextColor : 'inherit'
-                                                }}
-                                            />
+                                           
+                                          
+                                           <RichText
+        tagName="div"
+        value={(editingCells[`${rowIndex}-${column.accessor}`] ?? row[column.accessor]) || ''}
+        onChange={(value) => handleCellChange(rowIndex, column.accessor, value)}
+        placeholder="Enter text..."
+
+          
+       
+    />
+
+    
+   
                                         </td>
                                     )
                                 ))}
@@ -398,7 +435,7 @@ function Edit({ attributes, setAttributes }) {
             
                    <div className="table-controls">
                        <Button 
-                           primary 
+                          variant="primary"
                            onClick={addColumn}
                            style={{ marginRight: '10px' }}
                            icon={
@@ -410,7 +447,7 @@ function Edit({ attributes, setAttributes }) {
                            Add Column
                        </Button>
                        <Button 
-                           primary 
+                          variant="primary"
                            onClick={addRow}
                            icon={
                                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -454,7 +491,12 @@ function Save({ attributes }) {
                             <thead>
                                 <tr>
                                     {columns.map((column, index) => (
-                                        <th key={index}>{column.Header}</th>
+                                        <th 
+                                        key={index} 
+                                        dangerouslySetInnerHTML={{
+                                            __html: column.Header
+                                        }}
+                                    />
                                     ))}
                                 </tr>
                             </thead>
@@ -529,37 +571,42 @@ function Save({ attributes }) {
 
 
 
-              {/* Chart view version */}
-              {responsiveMode === 'chart' && (
-                  <div className="chart-view-table">
-                      {/* Overall header using top-left TH content */}
-                      {columns[0]?.Header && (
-                          <div className="chart-main-header">
-                              {columns[0].Header}
-                          </div>
-                      )}
-                      
-                      {columns.slice(1).map((column, colIndex) => (
-                          <div className="chart-column" key={colIndex}>
-                              <div className="chart-header">
-                                  {column.Header}
-                              </div>
-                              
-                              {data.map((row, rowIndex) => (
-                                  <div className="chart-row" key={rowIndex}>
-                                      <div className="chart-cell"
-                                          data-row-header={row[columns[0].accessor]}
-                                          data-column-header={column.Header}
-                                          dangerouslySetInnerHTML={{
-                                              __html: row[column.accessor]
-                                          }}
-                                      />
-                                  </div>
-                              ))}
-                          </div>
-                      ))}
-                  </div>
-              )}
+             {/* Chart view version */}
+             {responsiveMode === 'chart' && (
+                 <div className="chart-view-table">
+                     {/* Overall header using top-left TH content */}
+                     {columns[0]?.Header && (
+                         <div className="chart-main-header"
+                             dangerouslySetInnerHTML={{
+                                 __html: columns[0].Header
+                             }}
+                         />
+                     )}
+                     
+                     {columns.slice(1).map((column, colIndex) => (
+                         <div className="chart-column" key={colIndex}>
+                             <div className="chart-header"
+                                 dangerouslySetInnerHTML={{
+                                     __html: column.Header
+                                 }}
+                             />
+                             
+                             {data.map((row, rowIndex) => (
+                                 <div className="chart-row" key={rowIndex}>
+                                     <div className="chart-cell"
+                                         data-row-header={row[columns[0].accessor]}
+                                         data-column-header={column.Header}
+                                         dangerouslySetInnerHTML={{
+                                             __html: row[column.accessor]
+                                         }}
+                                     />
+                                 </div>
+                             ))}
+                         </div>
+                     ))}
+                 </div>
+             )}
+             
               
                
                

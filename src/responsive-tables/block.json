@@ -6,7 +6,20 @@
     "icon": "grid-view",
     "description": "Responsive tables block",
     "supports": {
-        "html": false
+        "html": false,
+        "typography": {
+            "fontSize": true
+        },
+        "formats": [
+            "core/bold",
+            "core/italic",
+            "core/link",
+            "core/strikethrough",
+            "core/underline",
+            "core/text-color",
+            "core/list",
+            "core/list-item"
+        ]
     },
     "textdomain": "maw",
     "editorScript": "file:../../build/maw-responsive-tables.js",
