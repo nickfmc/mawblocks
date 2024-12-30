@@ -125,20 +125,6 @@ function maw_options_page() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-// Add this inside your maw_options_page() function, after the block management section
-
 <div class="maw-card maw-demo-section">
     <h2>Responsive Table Modes</h2>
     <p class="maw-description">Examples of how your tables will display in different responsive modes:</p>
